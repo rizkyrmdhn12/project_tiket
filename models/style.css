@@ -1,0 +1,140 @@
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #2f3640;
+        }
+
+        .container {
+            position: relative;
+            width: 400px;
+            height: 440px;
+        }
+
+        .container .form-box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 40px;
+            transition: 0.5s ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .container .form-box.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .container .form-box h2 {
+            font-size: 2em;
+            color: #1c2333;
+            text-align: center;
+        }
+
+        .container .form-box form {
+            width: 100%;
+            margin-top: 25px;
+        }
+
+        .container .form-box .input-box {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            margin-bottom: 25px;
+        }
+
+        .container .form-box .input-box input {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: 2px solid #ccc;
+            outline: none;
+            border-radius: 5px;
+            padding: 0 15px;
+            color: #333;
+            font-size: 1em;
+        }
+
+        .container .form-box .input-box .label {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: #888;
+            pointer-events: none;
+            transition: 0.3s ease-in-out;
+        }
+
+        .container .form-box .input-box input:focus + .label,
+        .container .form-box .input-box input:not(:placeholder-shown) + .label {
+            top: 0;
+            transform: translateY(-50%) scale(0.85);
+            font-size: 0.8em;
+            background: #fff;
+            padding: 0 6px;
+            color: #1c2333;
+        }
+
+        .container .form-box .input-box .label .char {
+            display: inline-block;
+            transition: none;
+        }
+
+        .container .form-box .input-box input:focus + .label .char,
+        .container .form-box .input-box input:valid + .label .char {
+            transform: none;
+        }
+
+        .container .form-box button {
+            width: 100%;
+            height: 45px;
+            background: #1c2333;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+
+        .container .form-box button:hover {
+            background: #2f3640;
+        }
+
+        .container .form-box .register-text {
+            font-size: 0.9em;
+            color: #1c2333;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .container .form-box .register-text a {
+            color: #1c2333;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .container .form-box .register-text a:hover {
+            text-decoration: underline;
+        }

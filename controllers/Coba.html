@@ -1,34 +1,3 @@
-<?php
-$host     = "localhost";
-$username = "root";
-$password = "";
-$database = "aplikasi ticketing pesawat dan kereta api";
-
-$koneksi = new mysqli($host, $username, $password, $database);
-if($koneksi){ //cek koneksi
-//echo "database konek";
-}
-$nama          = "";
-$email         = "";
-$password      = "";
-
-if(isset($_POST['submit'])){
-    $nama        = $_POST ['nama'];
-    $email       = $_POST ['email'];
-    $password    = $_POST ['password'];
-        
-    if($nama && $email && $password)
-        $sql1 = "insert into login (nama, emial, password) values ('$nama', '$emial', '$password')";
-        $q1   = mysql_query($koneksi, $sql1);
-        if($q1){
-            $berhasil   = "data berhasil dimasukkan";
-        }else{
-            $gagal      = "data gagal dimasukkan";
-        }
- 
-}else
-?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -38,8 +7,43 @@ if(isset($_POST['submit'])){
     <link rel="stylesheet" href="../models/style.css" />
   </head>
   <body>
+    <div class="container">
+      <div id="loginForm" class="form-box active">
+        <h2>Login</h2>
+        <form action="#" method="post">
+          <div class="input-box">
+            <input required="" type="email" class="input" placeholder=" " />
+            <label class="label">
+              <span class="char" style="--index: 0">E</span>
+              <span class="char" style="--index: 1">m</span>
+              <span class="char" style="--index: 2">a</span>
+              <span class="char" style="--index: 3">i</span>
+              <span class="char" style="--index: 4">l</span>
+            </label>
+          </div>
+          <div class="input-box">
+            <input required="" type="password" class="input" placeholder=" " />
+            <label class="label">
+              <span class="char" style="--index: 0">P</span>
+              <span class="char" style="--index: 1">a</span>
+              <span class="char" style="--index: 2">s</span>
+              <span class="char" style="--index: 3">s</span>
+              <span class="char" style="--index: 4">w</span>
+              <span class="char" style="--index: 5">o</span>
+              <span class="char" style="--index: 6">r</span>
+              <span class="char" style="--index: 7">d</span>
+            </label>
+          </div>
+          <button type="submit">Login</button>
+        </form>
+        <p class="register-text">
+          Belum punya akun? <a href="#" id="showRegister">Registrasi</a>
+        </p>
+      </div>
 
-        <form action="$" method="post">
+      <div id="registerForm" class="form-box">
+        <h2>Register</h2>
+        <form action="#" method="post">
           <div class="input-box">
             <input required="" type="text" class="input" placeholder=" " />
             <label class="label">
