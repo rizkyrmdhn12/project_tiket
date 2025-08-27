@@ -2,114 +2,87 @@
 $host     = "localhost";
 $username = "root";
 $password = "";
-$database = "aplikasi ticketing pesawat dan kereta api";
+$database = "aplikasi ticketing pesawat dan kereta api"; // Gunakan nama tanpa spasi
 
+// Koneksi ke database
 $koneksi = new mysqli($host, $username, $password, $database);
-if($koneksi){ //cek koneksi
-//echo "database konek";
+
+// Cek koneksi
+if ($koneksi->connect_error) {
+    die("Koneksi gagal: " . $koneksi->connect_error);
 }
-$nama          = "";
-$email         = "";
-$password      = "";
 
-if(isset($_POST['submit'])){
-    $nama        = $_POST ['nama'];
-    $email       = $_POST ['email'];
-    $password    = $_POST ['password'];
-        
-    if($nama && $email && $password)
-        $sql1 = "insert into login (nama, emial, password) values ('$nama', '$emial', '$password')";
-        $q1   = mysql_query($koneksi, $sql1);
-        if($q1){
-            $berhasil   = "data berhasil dimasukkan";
-        }else{
-            $gagal      = "data gagal dimasukkan";
+// Inisialisasi variabel
+$nama       = "";
+$nik        = "";
+$email      = "";
+$pass_input = "";
+$berhasil   = "";
+$gagal      = "";
+
+// Proses saat form disubmit
+if (isset($_POST['submit'])) {
+    $nama       = trim($_POST['nama']);
+    $nik        = trim($_POST['nik']);
+    $email      = trim($_POST['email']);
+    $pass_input = $_POST['password'];
+
+    if (!empty($nama) && !empty($nik) && !empty($email) && !empty($pass_input)) {
+
+        $hashPass = password_hash($pass_input, PASSWORD_DEFAULT);
+
+        $stmt = $koneksi->prepare("INSERT INTO login (nama, nik, email, password) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $nama, $nik, $email, $hashPass);
+
+        if ($stmt->execute()) {
+            $berhasil = "Data berhasil dimasukkan";
+        } else {
+            $gagal = "Data gagal dimasukkan: " . $stmt->error;
         }
- 
-}else
-?>
 
+        $stmt->close();
+    } else {
+        $gagal = "Semua field wajib diisi.";
+    }
+}
+?>
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="id">
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login & Register Form</title>
+    <title>Form Registrasi</title>
     <link rel="stylesheet" href="../models/style.css" />
-  </head>
-  <body>
+</head>
+<body>
 
-        <form action="$" method="post">
-          <div class="input-box">
-            <input required="" type="text" class="input" placeholder=" " />
-            <label class="label">
-              <span class="char" style="--index: 0">F</span>
-              <span class="char" style="--index: 1">u</span>
-              <span class="char" style="--index: 2">l</span>
-              <span class="char" style="--index: 3">l</span>
-              <span class="char" style="--index: 4"> </span>
-              <span class="char" style="--index: 5">N</span>
-              <span class="char" style="--index: 6">a</span>
-              <span class="char" style="--index: 7">m</span>
-              <span class="char" style="--index: 8">e</span>
-            </label>
-          </div>
-          <div class="input-box">
-            <input required="" type="email" class="input" placeholder=" " />
-            <label class="label">
-              <span class="char" style="--index: 0">E</span>
-              <span class="char" style="--index: 1">m</span>
-              <span class="char" style="--index: 2">a</span>
-              <span class="char" style="--index: 3">i</span>
-              <span class="char" style="--index: 4">l</span>
-            </label>
-          </div>
-          <div class="input-box">
-            <input required="" type="password" class="input" placeholder=" " />
-            <label class="label">
-              <span class="char" style="--index: 0">P</span>
-              <span class="char" style="--index: 1">a</span>
-              <span class="char" style="--index: 2">s</span>
-              <span class="char" style="--index: 3">s</span>
-              <span class="char" style="--index: 4">w</span>
-              <span class="char" style="--index: 5">o</span>
-              <span class="char" style="--index: 6">r</span>
-              <span class="char" style="--index: 7">d</span>
-            </label>
-          </div>
-          <button type="submit">Register</button>
-        </form>
-        <p class="register-text">
-          Sudah punya akun? <a href="#" id="showLogin">Login</a>
-        </p>
-      </div>
+<form action="" method="post">
+    <div class="input-box">
+        <input required type="text" class="input" name="nama" placeholder=" " value="<?= htmlspecialchars($nama) ?>" />
+        <label class="label">Full Name</label>
     </div>
+    <div class="input-box">
+        <input required type="text" class="input" name="nik" placeholder=" " value="<?= htmlspecialchars($nik) ?>" />
+        <label class="label">NIK</label>
+    </div>
+    <div class="input-box">
+        <input required type="email" class="input" name="email" placeholder=" " value="<?= htmlspecialchars($email) ?>" />
+        <label class="label">Email</label>
+    </div>
+    <div class="input-box">
+        <input required type="password" class="input" name="password" placeholder=" " />
+        <label class="label">Password</label>
+    </div>
+    <button type="submit" name="submit">Register</button>
+</form>
 
-    <script>
-      const loginLink = document.getElementById("showLogin");
-      const registerLink = document.getElementById("showRegister");
-      const loginForm = document.getElementById("loginForm");
-      const registerForm = document.getElementById("registerForm");
+<?php if (!empty($berhasil)) : ?>
+    <p style="color:green;"><?= htmlspecialchars($berhasil) ?></p>
+<?php endif; ?>
 
-      function showLoginForm() {
-        registerForm.classList.remove("active");
-        loginForm.classList.add("active");
-      }
+<?php if (!empty($gagal)) : ?>
+    <p style="color:red;"><?= htmlspecialchars($gagal) ?></p>
+<?php endif; ?>
 
-      function showRegisterForm() {
-        loginForm.classList.remove("active");
-        registerForm.classList.add("active");
-      }
-
-      registerLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        showRegisterForm();
-      });
-
-      loginLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        showLoginForm();
-      });
-    </script>
-  </body>
+</body>
 </html>
