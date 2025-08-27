@@ -1,30 +1,25 @@
 <?php
-$host     = "localhost";
+$host = "localhost";
 $username = "root";
 $password = "";
-$database = "aplikasi ticketing pesawat dan kereta api"; // Gunakan nama tanpa spasi
+$database = "aplikasi ticketing pesawat dan kereta api";
 
-// Koneksi ke database
 $koneksi = new mysqli($host, $username, $password, $database);
 
-// Cek koneksi
 if ($koneksi->connect_error) {
-    die("Koneksi gagal: " . $koneksi->connect_error);
+    die("Koneksi database gagal: " . $koneksi->connect_error);
 }
 
-// Inisialisasi variabel
-$nama       = "";
-$nik        = "";
-$email      = "";
-$pass_input = "";
-$berhasil   = "";
-$gagal      = "";
+$nama = "";
+$nik = "";
+$email = "";
+$berhasil = "";
+$gagal = "";
 
-// Proses saat form disubmit
-if (isset($_POST['submit'])) {
-    $nama       = trim($_POST['nama']);
-    $nik        = trim($_POST['nik']);
-    $email      = trim($_POST['email']);
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+    $nama = trim($_POST['nama']);
+    $nik = trim($_POST['nik']);
+    $email = trim($_POST['email']);
     $pass_input = $_POST['password'];
 
     if (!empty($nama) && !empty($nik) && !empty($email) && !empty($pass_input)) {
@@ -32,20 +27,26 @@ if (isset($_POST['submit'])) {
         $hashPass = password_hash($pass_input, PASSWORD_DEFAULT);
 
         $stmt = $koneksi->prepare("INSERT INTO login (nama, nik, email, password) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $nama, $nik, $email, $hashPass);
+        
+        if ($stmt) {
+            $stmt->bind_param("ssss", $nama, $nik, $email, $hashPass);
 
-        if ($stmt->execute()) {
-            $berhasil = "Data berhasil dimasukkan";
+            if ($stmt->execute()) {
+                $berhasil = "Pendaftaran berhasil!";
+                $nama = $nik = $email = "";
+            } else {
+                $gagal = "Terjadi kesalahan saat menyimpan data: " . $stmt->error;
+            }
+            $stmt->close();
         } else {
-            $gagal = "Data gagal dimasukkan: " . $stmt->error;
+            $gagal = "Terjadi kesalahan pada prepared statement: " . $koneksi->error;
         }
-
-        $stmt->close();
     } else {
         $gagal = "Semua field wajib diisi.";
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
