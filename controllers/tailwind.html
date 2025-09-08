@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Navbar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGf+wY+P+w9L+e+I+y+r+a+c+D+D+a+D+A+D+A+D+D+A+D+D+D+D+D+D+D+D+D+D+D+D+D+A+D+D+D+D+A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgb(27, 29, 37);
+        }
+
+        .navbar {
+            position: relative;
+            width: 350px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #FFF;
+            border-radius: 10px;
+        }
+
+        .navbar ul {
+            display: flex;
+            width: 300px;
+        }
+
+        .navbar ul li {
+            list-style: none;
+            position: relative;
+            width: calc(350px / 5);
+            height: 60px;
+            z-index: 2;
+        }
+
+        .navbar ul li a {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            text-align: center;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .navbar ul li a .icon {
+            position: relative;
+            display: block;
+            line-height: 65px;
+            font-size: 1.3em;
+            transition: .5s;
+            color: #999999;
+        }
+
+        .navbar ul li.active a .icon {
+            transform: translateY(-32px);
+            color: #397bal;
+        }
+
+        .navbar ul li a .text {
+            position: absolute;
+            background-color: #397bal;
+            color: #fff;
+            padding: 2px 7px;
+            border-radius: 12px;
+            font-weight: 400;
+            font-size: 0.65em;
+            letter-spacing: 0.05em;
+            transition: .5s;
+            transform: translateY(15px);
+            opacity: 0;
+        }
+
+        .navbar ul li.active a .text {
+            transform: translateY(2px);
+            opacity: 1;
+        }
+
+        .indicator {
+            position: absolute;
+            top: -30px;
+            width: 60px;
+            height: 60px;
+            background-color: #FFF;
+            border-radius: 50%;
+            z-index: 1;
+            transition: .5s;
+        }
+
+        .indicator::before {
+            content: '';
+            position: absolute;
+            top: 0px;
+            left: -28px;
+            width: 30px;
+            height: 30px;
+            background-color: transparent;
+            border-radius: 50%;
+            box-shadow: 15px 18px #FFF;
+        }
+
+        .indicator::after {
+            content: '';
+            position: absolute;
+            top: 0px;
+            right: -28px;
+            width: 30px;
+            height: 30px;
+            background-color: transparent;
+            border-radius: 50%;
+            box-shadow: -15px 18px #FFF;
+        }
+
+        .navbar ul li:nth-child(1).active ~ .indicator {
+            transform: translateX(calc(60px * 0));
+        }
+
+        .navbar ul li:nth-child(2).active ~ .indicator {
+            transform: translateX(calc(60px * 1));
+        }
+
+        .navbar ul li:nth-child(3).active ~ .indicator {
+            transform: translateX(calc(60px * 2));
+        }
+
+        .navbar ul li:nth-child(4).active ~ .indicator {
+            transform: translateX(calc(60px * 3));
+        }
+
+        .navbar ul li:nth-child(5).active ~ .indicator {
+            transform: translateX(calc(60px * 4));
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-phone">
+        <div class="navbar">
+            <ul>
+                <li class="list active">
+                    <a href="#">
+                        <span class="icon"><i class="fa-solid fa-house"></i></span>
+                        <span class="text">Home</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon"><i class="fa-solid fa-user"></i></span>
+                        <span class="text">Profile</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon"><i class="fa-solid fa-envelope"></i></span>
+                        <span class="text">Message</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon"><i class="fa-solid fa-image"></i></span>
+                        <span class="text">Photos</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon"><i class="fa-solid fa-gear"></i></span>
+                        <span class="text">Settings</span>
+                    </a>
+                </li>
+                <div class="indicator"></div>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const list = document.querySelectorAll('.list');
+
+        function activeLink() {
+            list.forEach((item) => {
+                item.classList.remove('active');
+            });
+            this.classList.add('active');
+        }
+
+        list.forEach((item) =>
+            item.addEventListener('click', activeLink)
+        );
+    </script>
+</body>
+</html>
