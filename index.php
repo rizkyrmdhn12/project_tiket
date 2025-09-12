@@ -1,46 +1,5 @@
 <?php
-session_start();
-include_once 'database/koneksi.php';
-
-$login_message = "";
-
-if (isset($_POST['masuk'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    // Query login
-    $sql = "SELECT * FROM users WHERE username = ?";
-    $stmt = $conn->prepare($sql);
-
-    if (!$stmt) {
-        die("Query gagal diproses: " . $conn->error); // debug jika query gagal
-    }
-
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result && $result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-        $hashed_password = $user['password'];
-
-        //proses login
-        if (password_verify($password, $hashed_password)) {
-            $_SESSION['loggedin'] = true;
-            $_SESSION['username'] = $user['username'];
-            
-            header("location: dashboard.php");
-            exit;
-        } else {
-            $login_message = "Password salah. Coba lagi.";
-        }
-    } else {
-        $login_message = "Akun tidak ditemukan.";
-    }
-    
-    $stmt->close();
-}
-$conn->close();
+include_once 'controllers/login_proses.php';
 ?>
 
 <!DOCTYPE html>
@@ -107,7 +66,7 @@ $conn->close();
             </p>
         <?php endif; ?>
 
-        <form action="login.php" method="POST" class="mt-4 grid gap-3">
+        <form action="index.php" method="POST" class="mt-4 grid gap-3">
           <label class="text-sm font-medium">Username
             <input type="text" name="username" placeholder="Masukkan username Anda" class="mt-1 w-full rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500" required />
           </label>

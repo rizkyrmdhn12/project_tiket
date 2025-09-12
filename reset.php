@@ -1,18 +1,6 @@
 <?php
-session_start();
-include_once 'database/koneksi.php';
-
-$reset_message = "";
-
-if (isset($_POST['reset_password'])) {
-    $username = $_POST['username'];
-
-    // Di sini Anda akan menambahkan logika untuk mengirim email reset kata sandi
-    // Untuk tujuan demonstrasi, kita akan menampilkan pesan sederhana.
-    $reset_message = "Instruksi reset kata sandi telah dikirim ke email yang terkait dengan akun " . htmlspecialchars($username) . ".";
-}
+include_once 'controllers/proses_reset.php';
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -58,7 +46,7 @@ if (isset($_POST['reset_password'])) {
                 <h1 class="mt-2 text-4xl md:text-5xl font-extrabold tracking-tight">Lupa Kata Sandi Anda?</h1>
                 <p class="mt-3 text-gray-600 dark:text-gray-300">Masukkan nama pengguna Anda untuk menerima instruksi reset.</p>
                 <div class="mt-6 flex flex-wrap gap-3">
-                    <a href="login.php" class="inline-flex items-center px-4 py-2 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-indigo-300 dark:hover:border-indigo-500 transition">
+                    <a href="index.php" class="inline-flex items-center px-4 py-2 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-indigo-300 dark:hover:border-indigo-500 transition">
                         Login
                     </a>
                 </div>

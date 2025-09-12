@@ -1,9 +1,10 @@
 <?php
+
 session_start();
 
-// Cek apakah pengguna sudah login
+// Cek apakah sudah login
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("location: login.php");
+    header("location: index.php");
     exit;
 }
 
@@ -48,8 +49,8 @@ $username = $_SESSION['username'];
         <a href="#" class="hover:text-indigo-600 transition">Bantuan</a>
       </nav>
       <div class="flex items-center gap-2">
-        <span class="text-sm font-medium hidden sm:inline-block">Halo, <?= htmlspecialchars($username) ?></span>
-        <a href="logout.php" class="px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm text-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+        <span class="text-sm font-medium hidden sm:inline-block">Apa Kabar, <?= htmlspecialchars($username) ?></span>
+        <a href="controllers/logout.php" class="px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm text-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition">
           Logout
         </a>
         <button id="themeToggle" class="px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm text-sm">
