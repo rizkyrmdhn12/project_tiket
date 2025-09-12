@@ -74,7 +74,7 @@ include_once 'controllers/proses_register.php';
         </form>
         
         <div class="mt-4 text-sm text-gray-600 dark:text-gray-300">
-            Sudah punya akun? <a href="login.php" class="text-indigo-500 hover:underline">Login</a>
+            Sudah punya akun? <a href="index.php" class="text-indigo-500 hover:underline">Login</a>
         </div>
       </div>
     </section>
